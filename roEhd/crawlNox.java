@@ -1,5 +1,6 @@
 package team10.moneyTube.service.crawl;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,35 +32,45 @@ public class crawlNox {
         WebDriver driver = new ChromeDriver(options);
         driver.get(URL);
         //HTTP응답속도보다 자바의 컴파일 속도가 더 빠르기에 대기
-        try {Thread.sleep(1000);} catch (InterruptedException e) {}
+        try {Thread.sleep(3000);} catch (InterruptedException e) {}
 
-/*
         //구독자 랭킹 '지역' 으로 변경
         driver.findElement(By.xpath("//*[@id=\"tab-channel\"]/div[1]/div/div[1]/div[1]/div/ul/li[2]/a")).click();
         Document html = Jsoup.connect(URL).get();
 
         //지역 랭킹
         String rank = html.select("#area-rank > a").text();
+
         //구독자, 조회수, 평균조회수, 동영상, 라이브수입
         Elements baseData = html.select("ul.base-data").select("span.strong");
+
         String subscriber = baseData.get(0).text();
         String view = baseData.get(1).text();
         String avgView = baseData.get(2).text();
         Integer video = Integer.parseInt(baseData.get(3).text());
         String liveIncome = baseData.get(4).text();
+
+        //태그
+        Elements tagData = html.select("ul.tag-list").select("li.tag-item");
+
+        ArrayList<String> tags = new ArrayList<String>();
+        for(int i=0;i<tagData.size();i++)
+            tags.add(tagData.get(i).text());
+
+/*
+
+       //유튜브 채널 통계표 '30일' 로 변경
+        driver.findElement(By.xpath("//*[@id=\"tab-channel\"]/div[3]/div[1]/div/span[3]")).click();
+        Document doc = Jsoup.connect(URL).get();
+        Elements tableData = doc.select("table.tabla-ui-content");
+        System.out.println(tableData);
+
+        //nox 보고서
+
 */
 
 
 
-        //유튜브 채널 통계표 '30일' 로 변경
-        driver.findElement(By.xpath("//*[@id=\"tab-channel\"]/div[3]/div[1]/div/span[3]")).click();
-        Document doc = Jsoup.connect(URL).get();
-        Elements tableData = doc.select("div.table-content").select("table.tabla-ui-content");
-        System.out.println(tableData);
-
-
-
-        //nox 보고서
 
     }
 }
