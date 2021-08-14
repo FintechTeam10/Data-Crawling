@@ -15,6 +15,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class crawlNox {
+
+    public static Double stringToDouble(String in){
+
+        Double result;
+        if(in.contains(("￦")))
+            in = in.replace("￦", "").trim();
+        if(in.equals("-"))
+            return null;
+        if(in.contains("만")){
+            result = Double.parseDouble(in.replace("만", ""));
+            return result * 10000;
+        }
+        if (in.contains("억")) {
+            result = Double.parseDouble(in.replace("억", ""));
+            return result * 100000000;
+        }
+        return Double.parseDouble(in);
+    }
+
     public static void main(String[] args) throws IOException {
 
         String URL = "https://kr.noxinfluencer.com/youtube/channel/UCtCiO5t2voB14CmZKTkIzPQ";
@@ -44,11 +63,11 @@ public class crawlNox {
         //구독자, 조회수, 평균조회수, 동영상, 라이브수입
         Elements baseData = html.select("ul.base-data").select("span.strong");
 
-        String subscriber = baseData.get(0).text();
-        String view = baseData.get(1).text();
-        String avgView = baseData.get(2).text();
-        Integer video = Integer.parseInt(baseData.get(3).text());
-        String liveIncome = baseData.get(4).text();
+        Double subscriber = stringToDouble(baseData.get(0).text());
+        Double view = stringToDouble(baseData.get(1).text());
+        Double avgView = stringToDouble(baseData.get(2).text());
+        Double video = stringToDouble(baseData.get(3).text());
+        Double liveIncome = stringToDouble(baseData.get(4).text());
 
         //태그
         Elements tagData = html.select("ul.tag-list").select("li.tag-item");
