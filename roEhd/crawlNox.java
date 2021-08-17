@@ -91,7 +91,7 @@ public class crawlNox {
         for(int i=0;i<tagData.size();i++)
             tags.add(tagData.get(i).text());
 
-        //유튜브 채널 통계표
+        //유튜브 채널 통계표 --> 미완성
         Elements tableData = html.select("table.tabla-ui-content");
         System.out.println(tableData.text());
         ArrayList<channelInformation> channel = new ArrayList<>();
